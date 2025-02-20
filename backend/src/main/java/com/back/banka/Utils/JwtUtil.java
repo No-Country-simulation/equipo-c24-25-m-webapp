@@ -2,6 +2,7 @@ package com.back.banka.Utils;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
@@ -9,42 +10,51 @@ import java.util.Date;
 
 @Component
 public class JwtUtil {
-    private final String SECRET_KEY= "secret_key";
+    private final Key key;
+    private final long expirationTime;
 
-    private final long EXPIRATION_TIME = 1000*60*60; //Tiempo de una hora
-
-    private final Key key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
+    public JwtUtil(@Value("${JWT_SECRET}") String secret, @Value("{JWT_EXPIRATION}")long expiration){
+        this.key = Keys.hmacShaKeyFor(secret.getBytes()); //Generando clave con HS256
+        this.expirationTime = expiration;
+    }
 
 
     public String generateToken(String email){
         return Jwts.builder()
                 .setSubject(email)
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))// 1 hora
-                .signWith(key, SignatureAlgorithm.HS256).compact();
+                .setIssuedAt(new Date())//Fecha de creación del token
+                .setExpiration(new Date(System.currentTimeMillis() + expirationTime))// Tiempo en que va a expirar el Token
+                .signWith(key, SignatureAlgorithm.HS256)//Se usa HS256
+                .compact();
     }
 
     public String extractEmail(String token){
-        return Jwts.parserBuilder()
-                .setSigningKey(key)
-                .build()
-                .parseClaimsJws(token)
-                .getBody()
-                .getSubject();
+        return getClaims(token).getSubject();
     }
 
     public boolean validateToken(String token){
         try{
-            Jwts.parserBuilder()
-                    .setSigningKey(key)
-                    .build()
-                    .parseClaimsJws(token);
+           getClaims(token);
             return true;
         } catch (ExpiredJwtException e){
-            System.out.println("Token expired:" + e.getMessage());
+            System.out.println("Token expirado:" + e.getMessage());
         } catch (JwtException e){
-            System.out.println("Invalid token" + e.getMessage());
+            System.out.println("Token Inválido" + e.getMessage());
         }
         return false;
+    }
+
+    //Para la validación del token
+
+    public String ValidateTokenAndGetMessage(String token){
+        return validateToken(token)?"Token válido":"Token inválido";
+    }
+
+    public Claims getClaims(String token){
+        return Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
     }
 }

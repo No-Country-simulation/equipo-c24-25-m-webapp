@@ -42,6 +42,12 @@ import lombok.*;
         @Column(nullable = false)
         private boolean status;
 
+        public String getEmail() {
+            return email;
+        }
 
+        public String getPassword() {
+            return password;
+        }
     }
 
