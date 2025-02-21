@@ -3,17 +3,18 @@ package com.back.banka.Utils;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.security.Key;
 import java.util.Date;
 
-@Component
+@Service
 public class JwtUtil {
+
     private final Key key;
     private final long expirationTime;
 
-    public JwtUtil(@Value("${JWT_SECRET}") String secret, @Value("{JWT_EXPIRATION}")long expiration){
+    public JwtUtil(@Value("${JWT_SECRET}") String secret, @Value("${JWT_EXPIRATION}")long expiration){
         this.key = Keys.hmacShaKeyFor(secret.getBytes()); //Generando clave con HS256
         this.expirationTime = expiration;
     }
@@ -34,7 +35,7 @@ public class JwtUtil {
 
     public boolean validateToken(String token){
         try{
-           getClaims(token);
+            getClaims(token);
             return true;
         } catch (ExpiredJwtException e){
             System.out.println("Token expirado:" + e.getMessage());

@@ -8,9 +8,13 @@ export default {
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        'black-purple-gradient': 'linear-gradient(90deg, rgba(33,33,33,1) 0%, rgba(101,10,176,1) 100%)',
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        "line-color":"#25F712",
       },
     },
   },

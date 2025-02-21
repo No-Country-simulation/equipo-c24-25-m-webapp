@@ -5,9 +5,45 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2a131ce9-c588-4273-8b8e-7c7be129c8e2" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/back/banka/Model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/back/banka/Model/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/back/banka/Exceptions/Custom/BadRequestExceptions.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/back/banka/Exceptions/Custom/CustomAuthenticationException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/back/banka/Exceptions/Custom/InvalidCredentialExceptions.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/back/banka/Exceptions/Dtos/ErrorResponseDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/back/banka/Model/SecurityUser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/back/banka/Services/Impl/UserDetailsServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/back/banka/Utils/JwtEntryPoint.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/back/banka/Utils/JwtService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/carousel-1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/carousel-2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/carousel-3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/payment-icon.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/people-1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/signal-icon.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/support-icon.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/components/Carousel/carousel.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/components/Navbar/navbar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/back/banka/Config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/back/banka/Config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/back/banka/Config/SwaggerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/back/banka/Config/SwaggerConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/back/banka/Controllers/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/back/banka/Controllers/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/back/banka/Dtos/RequestDto/LoginRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/back/banka/Dtos/RequestDto/LoginRequestDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/back/banka/Dtos/ResponseDto/LoginResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/back/banka/Dtos/ResponseDto/LoginResponseDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/back/banka/Dtos/ResponseDto/RegisterResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/back/banka/Dtos/ResponseDto/RegisterResponseDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/back/banka/Enums/Rol.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/back/banka/Enums/Rol.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/back/banka/Exceptions/Dtos/ResponseDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/back/banka/Exceptions/Handler/GlobalHandlerException.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/back/banka/Exceptions/Handler/GlobalHandlerException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/back/banka/Repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/back/banka/Repository/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/back/banka/Services/Impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/back/banka/Services/Impl/UserServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/back/banka/Utils/JwtUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/back/banka/Utils/JwtUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/globals.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/tailwind.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/tailwind.config.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,9 +60,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 6
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
   <component name="ProjectId" id="2tHEl1ecQDHcKiwe5evYVLadSh1" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -34,9 +70,10 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.BankaApplication (1).executor": "Run",
     "Application.BankaApplication.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "PROJ-4-creacion-de-la-entidad-usuario-en-el-proyecto",
+    "git-widget-placeholder": "Merging PROJ-8-implementar-metodos-para-generar-y-validar-jwt",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/edgar/OneDrive/Escritorio/ProyectosCountry/equipo-c24-25-m-webapp",
     "project.structure.last.edited": "Project",
@@ -44,7 +81,20 @@
     "project.structure.side.proportion": "0.0"
   }
 }]]></component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.BankaApplication (1)">
+    <configuration name="BankaApplication (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.back.banka.BankaApplication" />
+      <module name="banka" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.back.banka.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="BankaApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.back.banka.BankaApplication" />
       <module name="equipo-c24-25-m-webapp" />
@@ -60,6 +110,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.BankaApplication (1)" />
         <item itemvalue="Application.BankaApplication" />
       </list>
     </recent_temporary>
@@ -74,5 +125,16 @@
       <updated>1740000746725</updated>
     </task>
     <servers />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/backend/src/main/java/com/back/banka/BankaApplication.java</url>
+          <line>6</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
