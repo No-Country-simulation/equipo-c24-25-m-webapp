@@ -5,6 +5,8 @@ import lombok.*;
 @Getter
 @Setter
 @AllArgsConstructor
+@Data
+
 
 @Builder
 public class LoginResponseDto {
