@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="824cc951-58a8-4472-b9b8-a75f97fba34d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/back/banka/Model/Notifications.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/back/banka/Model/Notifications.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/back/banka/Model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/back/banka/Model/User.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="developBack" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Edgar-Ip&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/No-Country-simulation/equipo-c24-25-m-webapp.git&quot;,
+    &quot;accountId&quot;: &quot;a58c4550-d593-4b27-8524-bb83e0d286be&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="2tYlhaScd7ihlkAvfJDxLY7ONJK" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.BankaApplication.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "PROJ-16-realizar-transferencia-de-saldo",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/edgar/OneDrive/Escritorio/Proyecto No Country/equipo-c24-25-m-webapp"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="BankaApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.back.banka.BankaApplication" />
+      <module name="banka" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.back.banka.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.BankaApplication" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="824cc951-58a8-4472-b9b8-a75f97fba34d" name="Changes" comment="" />
+      <created>1740537008894</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1740537008894</updated>
+    </task>
+    <servers />
+  </component>
+</project>

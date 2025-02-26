@@ -32,4 +32,5 @@ public class Notifications {
     @Enumerated(EnumType.STRING)
     private NotificationsType type;
 
+
 }
