@@ -1,4 +1,5 @@
 package com.back.banka.Dtos.RequestDto;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

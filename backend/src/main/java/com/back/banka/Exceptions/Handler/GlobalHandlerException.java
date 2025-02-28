@@ -95,7 +95,7 @@ public class GlobalHandlerException {
         ErrorsResponse errorResponse = new ErrorsResponse(
                 LocalDateTime.now(),
                 HttpStatus.BAD_REQUEST.value(),
-                "Validation Error",
+                "La solicitud contiene errores de validación. Por favor, revisa los campos indicados.",
                 errors
         );
 

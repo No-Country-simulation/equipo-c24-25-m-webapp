@@ -22,7 +22,7 @@ public class EmailServiceImpl implements IEmailService {
     private String mailUsername;
 
     @Override
-    public void sendEmail(String to, String subject, String content) {
+    public void sendEmail(String to, String subject, String body) {
         try{
             MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true,StandardCharsets.UTF_8.name());
@@ -31,7 +31,7 @@ public class EmailServiceImpl implements IEmailService {
             helper.setFrom(mailUsername);
             helper.setTo(to);
             helper.setSubject(subject);
-            helper.setText(content, true);
+            helper.setText(body, true);
 
             javaMailSender.send(message);
         } catch (MessagingException e){

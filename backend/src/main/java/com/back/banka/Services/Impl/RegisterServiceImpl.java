@@ -47,7 +47,12 @@ public class RegisterServiceImpl implements IRegisterService {
         Map<String, Object> emailVariables = new HashMap<>();
         emailVariables.put("username", savedUser.getName());
 
-        emailService.sendEmail(savedUser.getEmail(), "¡Bienvenido a Luma!", "welcome-email");
+
+        try {
+            emailService.sendEmail(savedUser.getEmail(), "¡Bienvenido a Luma!", "welcome-email");
+        } catch (Exception e) {
+            System.out.println("Error al enviar el correo: " + e.getMessage());
+        }
 
 
         return RegisterResponseDto.builder()
