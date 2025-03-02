@@ -20,6 +20,7 @@ public class EmailController {
                 emailRequest.getSubject(),
                 emailRequest.getContent()
                 );
+
         return ResponseEntity.ok("Correo enviado correctamente");
     }
 }

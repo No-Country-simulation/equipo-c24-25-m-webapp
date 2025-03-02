@@ -92,4 +92,20 @@ public class AccountBankController {
         ReactivateAccountResponseDto deactivateAccount = this.accountBankService.reactiveAccount(accountId);
         return ResponseEntity.status(HttpStatus.OK).body(deactivateAccount);
     }
+
+
+    @Operation(summary = "Ver saldo de una cuenta bancaria",
+            description = "Permite ver el saldo de una cuenta bancaria para un usuario autenticado.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Peticion procesada exitosamente."),
+            @ApiResponse(responseCode = "400", description = "Solicitud incorrecta."),
+            @ApiResponse(responseCode = "401", description = "No autorizado (token inválido o sesión expirada)."),
+            @ApiResponse(responseCode = "403", description = "Acceso denegado (usuario sin permisos para ver saldo de  la cuenta)."),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor.")
+    })
+    @GetMapping("/saldo/{accountId}")
+    public ResponseEntity<ActiveAccountResponseDto> getBalance(@PathVariable Long accountId){
+        ActiveAccountResponseDto accountResponseDto = this.accountBankService.getBalance(accountId);
+        return  ResponseEntity.status(HttpStatus.OK).body(accountResponseDto);
+    }
 }

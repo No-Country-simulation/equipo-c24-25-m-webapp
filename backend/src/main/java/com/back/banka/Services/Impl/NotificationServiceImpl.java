@@ -1,6 +1,7 @@
 package com.back.banka.Services.Impl;
 
 import com.back.banka.Dtos.RequestDto.NotificationRequestDto;
+import com.back.banka.Enums.NotificationsType;
 import com.back.banka.Model.Notifications;
 import com.back.banka.Repository.INotificationRepository;
 import com.back.banka.Services.IServices.INotificationService;
@@ -62,3 +63,4 @@ public class NotificationServiceImpl implements INotificationService {
     }
 
 }
+
