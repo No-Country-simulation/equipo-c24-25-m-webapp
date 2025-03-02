@@ -12,20 +12,20 @@ import java.util.Properties;
 
 public class EmailConfig {
 
-    @Value("${mail.username}")
+    @Value("${MAIL_USERNAME}")
     private String mailUsername;
-    @Value("${mail.password}")
+    @Value("${MAIL_PASSWORD}")
     private String mailPassword;
 
     @Bean
     public JavaMailSender javaMailSender() {
     JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
 
-    // Configura los parámetros SMTP según tu proveedor de correo
-    mailSender.setHost("smtp.gmail.com");  // Cambia esto si usas otro proveedor
+    // Configurar los parámetros SMTP según el proveedor de correo
+    mailSender.setHost("smtp.gmail.com");
     mailSender.setPort(587);  // El puerto SMTP de Gmail
     mailSender.setUsername(mailUsername);  // Tu correo electrónico
-    mailSender.setPassword(mailPassword);  // Tu contraseña o aplicación de contraseña (si usas Gmail con 2FA)
+    mailSender.setPassword(mailPassword);  // Tu contraseña
 
     Properties props = mailSender.getJavaMailProperties();
     props.put("mail.transport.protocol", "smtp");

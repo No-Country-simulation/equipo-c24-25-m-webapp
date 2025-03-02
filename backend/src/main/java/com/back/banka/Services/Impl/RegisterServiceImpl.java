@@ -30,6 +30,9 @@ public class RegisterServiceImpl implements IRegisterService {
             if (userRepository.existsByEmail(request.getEmail())) {
                 throw new UserAlreadyExistsException("Correo ya registrado. Intenta iniciar sesión o ingresa un correo distinto.");
             }
+            if (userRepository.existsByDNI(request.getDNI())){
+                throw new UserAlreadyExistsException("El DNI que ingresaste ya está registrado. Ingresa un DNI distinto o revisa tus datos.");
+            }
 
             User user = User.builder()
                     .name(request.getName())
@@ -49,9 +52,12 @@ public class RegisterServiceImpl implements IRegisterService {
 
 
         try {
+            System.out.println("Intentando enviar correo a: " + savedUser.getEmail());
             emailService.sendEmail(savedUser.getEmail(), "¡Bienvenido a Luma!", "welcome-email");
+            System.out.println("Correo enviado con éxito.");
         } catch (Exception e) {
             System.out.println("Error al enviar el correo: " + e.getMessage());
+            e.printStackTrace();
         }
 
 

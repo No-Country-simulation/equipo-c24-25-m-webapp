@@ -13,13 +13,16 @@ import java.util.Map;
 
 
 @Service
-@AllArgsConstructor
 public class EmailServiceImpl implements IEmailService {
 
     private  final JavaMailSender javaMailSender;
 
-    @Value("${mail.username}")
+    @Value("${MAIL_USERNAME}")
     private String mailUsername;
+
+    public EmailServiceImpl(JavaMailSender javaMailSender){
+        this.javaMailSender = javaMailSender;
+    }
 
     @Override
     public void sendEmail(String to, String subject, String body) {
@@ -38,4 +41,6 @@ public class EmailServiceImpl implements IEmailService {
             throw new RuntimeException("Hubo un error al enviar el correo", e);
         }
     }
+
+
 }

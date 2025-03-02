@@ -1,4 +1,5 @@
 package com.back.banka.Dtos.RequestDto;
+import jakarta.persistence.Column;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
@@ -15,7 +16,8 @@ public class RegisterRequestDto {
     @NotBlank(message = "Campo obligatorio")
     private String name;
     @NotNull(message = "Campo obligatorio")
-
+    @Min(value = 18, message = "Debes ser mayor de 18 años para poder registrarte.")
+    @Max(value = 120, message = "La edad máxima permitida es 120 años.")
     private int age;
     @NotBlank(message = "Campo obligatorio")
     @Email(message = "Formato inválido")
@@ -32,6 +34,7 @@ public class RegisterRequestDto {
     @NotBlank(message = "Campo obligatorio")
     @Size(min = 8, max = 8, message = "El DNI debe tener exactamente 8 caracteres")
     @Pattern(regexp = "\\d{8}", message = "El DNI debe contener solo números")
+    @Column(name = "dni", nullable = false, unique = true)
     private String DNI;
 
 }
