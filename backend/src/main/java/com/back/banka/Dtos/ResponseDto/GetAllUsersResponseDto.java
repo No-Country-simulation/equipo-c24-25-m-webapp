@@ -8,6 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class GetAllUsersResponseDto {
+    private Long userId;
     private String name;
     private String country;
     private String DNI;

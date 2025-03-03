@@ -157,6 +157,7 @@ MEtodo para actualizar la contraseña de un usuario en la base de datos.
 
             return allUsers.stream()
                     .map(user -> GetAllUsersResponseDto.builder()
+                            .userId(user.getId())
                             .name(user.getName())
                             .DNI(user.getDNI())
                             .birthday(String.valueOf(user.getDateBirthDay()))
