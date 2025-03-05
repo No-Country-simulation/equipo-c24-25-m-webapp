@@ -61,11 +61,9 @@ public class AccountBankController {
             @ApiResponse(responseCode = "403", description = "Acceso denegado (usuario sin permisos para desactivar la cuenta)."),
             @ApiResponse(responseCode = "500", description = "Error interno del servidor.")
     })
-    @PostMapping("/desactivar/{accountId}")
-    public ResponseEntity<DeactivateAccountResponseDto> deactivateAccount(
-            @Valid
-            @PathVariable Long accountId){
-         DeactivateAccountResponseDto deactivateAccount = this.accountBankService.deactivateAccount(accountId);
+    @PostMapping("/desactivar")
+    public ResponseEntity<DeactivateAccountResponseDto> deactivateAccount(){
+         DeactivateAccountResponseDto deactivateAccount = this.accountBankService.deactivateAccount();
          return ResponseEntity.status(HttpStatus.OK).body(deactivateAccount);
     }
 
@@ -85,11 +83,9 @@ public class AccountBankController {
             @ApiResponse(responseCode = "403", description = "Acceso denegado (usuario sin permisos para reactivar la cuenta)."),
             @ApiResponse(responseCode = "500", description = "Error interno del servidor.")
     })
-    @PostMapping("/reactivar/{accountId}")
-    public ResponseEntity<ReactivateAccountResponseDto> reactivateAccount(
-            @Valid
-            @PathVariable Long accountId){
-        ReactivateAccountResponseDto deactivateAccount = this.accountBankService.reactiveAccount(accountId);
+    @PostMapping("/reactivar")
+    public ResponseEntity<ReactivateAccountResponseDto> reactivateAccount(){
+        ReactivateAccountResponseDto deactivateAccount = this.accountBankService.reactiveAccount();
         return ResponseEntity.status(HttpStatus.OK).body(deactivateAccount);
     }
 
@@ -103,9 +99,9 @@ public class AccountBankController {
             @ApiResponse(responseCode = "403", description = "Acceso denegado (usuario sin permisos para ver saldo de  la cuenta)."),
             @ApiResponse(responseCode = "500", description = "Error interno del servidor.")
     })
-    @GetMapping("/saldo/{accountId}")
-    public ResponseEntity<ActiveAccountResponseDto> getBalance(@PathVariable Long accountId){
-        ActiveAccountResponseDto accountResponseDto = this.accountBankService.getBalance(accountId);
+    @GetMapping("/saldo")
+    public ResponseEntity<ActiveAccountResponseDto> getBalance(){
+        ActiveAccountResponseDto accountResponseDto = this.accountBankService.getBalance();
         return  ResponseEntity.status(HttpStatus.OK).body(accountResponseDto);
     }
 

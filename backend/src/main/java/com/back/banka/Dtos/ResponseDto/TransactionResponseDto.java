@@ -16,6 +16,8 @@ public class TransactionResponseDto {
     private Long receiverId;
     private BigDecimal amount;
     private LocalDateTime date;
+    private String numberAccountSender;
+    private String numberAccountReceiving;
     private StatusTransactions status;
     private TransactionType transactionType;
 

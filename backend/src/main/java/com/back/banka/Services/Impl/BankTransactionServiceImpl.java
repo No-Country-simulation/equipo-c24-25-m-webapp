@@ -18,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -36,14 +35,22 @@ public class BankTransactionServiceImpl {
 
 
     @Transactional(isolation = Isolation.SERIALIZABLE, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-    public TransactionResponseDto transfer(Long senderAccountId, TransactionRequestDto requestDto) {
+    public TransactionResponseDto transfer( TransactionRequestDto requestDto) {
+
+        Long userId = this.utilsService.getAuthenticatedUserId();
+        if (userId == null) {
+            throw new CustomAuthenticationException("Error: usuario no autenticado");
+        }
+
         String username = this.utilsService.getAuthenticatedUser();
         if (username == null) {
             throw new CustomAuthenticationException("Error: usuario no autenticado");
         }
 
-        AccountBank senderAccount = accountBankRepository.findByIdAndAccountStatus(senderAccountId, AccountStatus.ACTIVE)
-                .orElseThrow(() -> new ModelNotFoundException("Cuenta bancaria remitente no encontrada o inactiva"));
+
+        AccountBank senderAccount = accountBankRepository.findByUserIdAndAccountStatus(userId, AccountStatus.ACTIVE)
+                .orElseThrow(() -> new ModelNotFoundException("No se encontró una cuenta activa para el usuario"));
+
 
         this.utilsService.validateOwnership(senderAccount, username);
 
@@ -87,7 +94,7 @@ public class BankTransactionServiceImpl {
         CompletableFuture.runAsync(() -> {
             try {
                 emailService.sendEmail(
-                        senderAccount.getUser().getEmail(),
+                        username,
                         "Transferencia realizada con éxito",
                         String.format("Tu transferencia de $%s a la cuenta %s ha sido procesada con éxito. Tu nuevo saldo es $%s.",
                                 requestDto.getAmount(),
@@ -114,6 +121,8 @@ public class BankTransactionServiceImpl {
                 transaction.getAccountReceiving().getId(),
                 transaction.getAmount(),
                 transaction.getDate(),
+                transaction.getAccountSend().getNumber(),
+                transaction.getAccountReceiving().getNumber(),
                 transaction.getStatus(),
                 transaction.getTransactionType()
         );
@@ -121,30 +130,40 @@ public class BankTransactionServiceImpl {
 
 
     @Transactional(readOnly = true)
-    public List<TransactionResponseDto> getTransactionHistory(Long accountId) {
+    public List<TransactionResponseDto> getTransactionHistory() {
+
         {
+            Long userId = this.utilsService.getAuthenticatedUserId();
+            if (userId == null) {
+                throw new CustomAuthenticationException("Error: usuario no autenticado");
+            }
+
             String username = this.utilsService.getAuthenticatedUser();
             if (username == null) {
                 throw new CustomAuthenticationException("Error: usuario no autenticado");
             }
 
             AccountBank userAccount = accountBankRepository
-                    .findByIdAndAccountStatus(accountId, AccountStatus.ACTIVE)
+                    .findByUserIdAndAccountStatus(userId, AccountStatus.ACTIVE)
                     .orElseThrow(() -> new ModelNotFoundException("Cuenta bancaria no encontrada o inactiva"));
             this.utilsService.validateOwnership(userAccount, username);
 
-            List<BankTransaction> transactions = transactionRepository.findAllTransactionsOrderedByMonth(accountId);
+            List<BankTransaction> transactions = transactionRepository.findAllTransactionsOrderedByMonth(userAccount.getId());
 
             return transactions.stream()
                     .map(transaction -> {
-                        boolean isIncoming = transaction.getAccountReceiving().getId().equals(accountId);
+                        boolean isIncoming = transaction.getAccountReceiving().getId().equals(userAccount.getId());
                         return new TransactionResponseDto(
                                 transaction.getAccountSend().getId(),
                                 transaction.getAccountReceiving().getId(),
                                 transaction.getAmount(),
                                 transaction.getDate(),
+                                transaction.getAccountSend().getNumber(),
+                                transaction.getAccountReceiving().getNumber(),
                                 transaction.getStatus(),
                                 isIncoming ? TransactionType.RECEIVING_TRANSACTION : TransactionType.SENDING_TRANSACTION
+
+
                         );
                     })
                     .collect(Collectors.toList());

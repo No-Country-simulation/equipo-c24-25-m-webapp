@@ -4,6 +4,7 @@ import com.back.banka.Dtos.RequestDto.ResetPasswordRequestDto;
 import com.back.banka.Dtos.RequestDto.UpdateUserRequestDto;
 import com.back.banka.Dtos.ResponseDto.GeneralResponseDto;
 import com.back.banka.Dtos.ResponseDto.GetAllUsersResponseDto;
+import com.back.banka.Dtos.ResponseDto.ProfileResponseDto;
 import com.back.banka.Dtos.ResponseDto.UpdateUserResponseDto;
 import com.back.banka.Model.User;
 import com.back.banka.Services.IServices.IUserService;
@@ -79,10 +80,26 @@ public class UserController {
 
     }
     @PreAuthorize("hasRole('CLIENT')")
-    @PutMapping("/editar/{id}")
-    public ResponseEntity<UpdateUserResponseDto> updateUser (@PathVariable Long id, @Valid @RequestBody UpdateUserRequestDto request){
-         UpdateUserResponseDto updatedUser = userService.updateUser(id, request);
+    @PutMapping("/editar")
+    public ResponseEntity<UpdateUserResponseDto> updateUser ( @Valid @RequestBody UpdateUserRequestDto request){
+         UpdateUserResponseDto updatedUser = userService.updateUser( request);
          return ResponseEntity.ok(updatedUser);
+    }
+
+    @Operation(
+            summary = "Metodo para obtener perfil de un usuario",
+            description = "Este metodo se puede obtener el perfil del usuario, " +
+                    "obtiene propiedades de los usuarios"
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "datos obtenidos correctamente"),
+            @ApiResponse(responseCode = "404", description = "usuario no  encontrado")
+    })
+    @PreAuthorize("hasRole('CLIENT')")
+    @GetMapping("/perfil-usuario")
+    public ResponseEntity<ProfileResponseDto> profileUser(){
+         ProfileResponseDto profile = this.userService.profileUser();
+         return ResponseEntity.status(HttpStatus.OK).body(profile);
     }
 
 }

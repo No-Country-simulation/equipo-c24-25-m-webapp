@@ -23,7 +23,7 @@ COPY ./src /root/src
 RUN ./mvnw clean install -DskipTests
 
 # Informar el puerto donde se ejecutará la aplicación
-EXPOSE 8082
+EXPOSE 8080
 
 # Iniciar la aplicación cuando el contenedor se ejecute
 ENTRYPOINT ["java", "-jar", "/root/target/banka-0.0.1-SNAPSHOT.jar"]

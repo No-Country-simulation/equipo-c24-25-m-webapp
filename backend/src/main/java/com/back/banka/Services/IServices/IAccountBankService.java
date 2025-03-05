@@ -11,9 +11,9 @@ import java.util.List;
 public interface IAccountBankService {
 
     ActiveAccountResponseDto activeAccount(ActiveAccountRequestDto requestDto);
-    DeactivateAccountResponseDto deactivateAccount(Long accountId);
+    DeactivateAccountResponseDto deactivateAccount();
     List<GetAllAccountDto> getAllAccounts();
-    ReactivateAccountResponseDto reactiveAccount(Long accountId);
-    ActiveAccountResponseDto getBalance(Long accountId);
+    ReactivateAccountResponseDto reactiveAccount();
+    ActiveAccountResponseDto getBalance();
 
 }

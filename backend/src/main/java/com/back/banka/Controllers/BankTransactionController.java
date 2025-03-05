@@ -20,17 +20,16 @@ public class BankTransactionController {
     private final BankTransactionServiceImpl transactionService;
 
 
-    @PostMapping("/transferir/{accountId}")
+    @PostMapping("/transferir")
     public ResponseEntity<TransactionResponseDto> transfer(
-            @RequestParam Long accountId,
             @RequestBody TransactionRequestDto requestDto){
-        TransactionResponseDto responseDto = transactionService.transfer(accountId,requestDto);
+        TransactionResponseDto responseDto = transactionService.transfer(requestDto);
         return ResponseEntity.ok(responseDto);
     }
 
-    @GetMapping("/obtener-transacciones/{accountId}")
-    public ResponseEntity<List<TransactionResponseDto>> getTransactionHistory(@PathVariable Long accountId){
-        List<TransactionResponseDto> transactions = transactionService.getTransactionHistory(accountId);
+    @GetMapping("/obtener-transacciones")
+    public ResponseEntity<List<TransactionResponseDto>> getTransactionHistory(){
+        List<TransactionResponseDto> transactions = transactionService.getTransactionHistory();
         return ResponseEntity.ok(transactions);
     }
 

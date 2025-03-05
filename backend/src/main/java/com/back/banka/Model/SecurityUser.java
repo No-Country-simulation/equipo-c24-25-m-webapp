@@ -27,10 +27,15 @@ public class SecurityUser implements UserDetails {
         return Collections.singleton(new SimpleGrantedAuthority("ROLE_" + user.getRole().name()));
     }
 
+    public User getUser(){
+        return this.user;
+    }
+
     @Override
     public String getPassword() {
         return user.getPassword();
     }
+
 
     @Override
     public String getUsername() {

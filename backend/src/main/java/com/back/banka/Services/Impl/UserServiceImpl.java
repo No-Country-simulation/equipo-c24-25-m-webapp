@@ -3,10 +3,15 @@ import com.back.banka.Dtos.RequestDto.ResetPasswordRequestDto;
 import com.back.banka.Dtos.RequestDto.UpdateUserRequestDto;
 import com.back.banka.Dtos.ResponseDto.GeneralResponseDto;
 import com.back.banka.Dtos.ResponseDto.GetAllUsersResponseDto;
+import com.back.banka.Dtos.ResponseDto.ProfileResponseDto;
 import com.back.banka.Dtos.ResponseDto.UpdateUserResponseDto;
+import com.back.banka.Exceptions.Custom.CustomAuthenticationException;
 import com.back.banka.Exceptions.Custom.DniAlreadyExistsException;
+import com.back.banka.Exceptions.Custom.ModelNotFoundException;
 import com.back.banka.Exceptions.Custom.UserNotFoundException;
+import com.back.banka.Model.AccountBank;
 import com.back.banka.Model.User;
+import com.back.banka.Repository.IAccountBankRepository;
 import com.back.banka.Repository.UserRepository;
 import com.back.banka.Services.IServices.IEmailService;
 import com.back.banka.Services.IServices.IUserService;
@@ -37,17 +42,19 @@ public class UserServiceImpl implements IUserService {
     private  final IUtilsService utilsService;
     private final IEmailService emailService;
     private final JwtUtil jwtUtil;
+    private final IAccountBankRepository accountBankRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository,
                            IUtilsService utilsService, IEmailService emailService,
-                           JwtUtil jwtUtil,
+                           JwtUtil jwtUtil, IAccountBankRepository accountBankRepository,
                            PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.utilsService = utilsService;
         this.emailService = emailService;
         this.jwtUtil = jwtUtil;
+        this.accountBankRepository = accountBankRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -177,20 +184,28 @@ Método que permite a un usuario modificar su información personal.
  **/
     @Transactional
     @Override
-    public UpdateUserResponseDto updateUser(Long id, UpdateUserRequestDto request){
+    public UpdateUserResponseDto updateUser( UpdateUserRequestDto request){
         try{
-            User user = this.userRepository.findById(id).orElseThrow(()
+            Long userID = this.utilsService.getAuthenticatedUserId();
+            if(userID == null){
+                throw new CustomAuthenticationException("Error: usuario no autenticaso");
+            }
+
+
+            User user = this.userRepository.findById(userID).orElseThrow(()
                     ->  new UserNotFoundException("usuario no encontrado"));
 
             if ( request.getEmail() != null && !request.getEmail().equals(user.getEmail()) &&
-                    userRepository.existsByEmailAndIdNot(request.getEmail(), id)) {
+                    userRepository.existsByEmailAndIdNot(request.getEmail(), userID)) {
                 throw new ResponseStatusException(
                         HttpStatus.BAD_REQUEST, "El correo electrónico ya está registrado."
                 );
             }
-
+             if(!userID.equals(this.utilsService.getAuthenticatedUserId())){
+                 throw new CustomAuthenticationException("Error: no esta autorizado para editar datos de este usuarop");
+             }
             if (request.getDNI() !=null && !request.getDNI().equals(user.getDNI()) &&
-                    userRepository.existsByDNIAndIdNot(request.getDNI(),id)) {
+                    userRepository.existsByDNIAndIdNot(request.getDNI(),userID)) {
                 throw new DniAlreadyExistsException("El DNI ya está registrado.");
             }
 
@@ -219,5 +234,32 @@ Método que permite a un usuario modificar su información personal.
         } catch (Exception e) {
             throw new RuntimeException("Error interno del servidor", e);
         }
+    }
+
+    @Override
+    public ProfileResponseDto profileUser() {
+
+        Long userId = this.utilsService.getAuthenticatedUserId();
+
+        if(userId == null){
+            throw new CustomAuthenticationException("Usuario no esta autenticado");
+        }
+        if(!userId.equals(this.utilsService.getAuthenticatedUserId())){
+            throw new CustomAuthenticationException("Error: no tiene permiso para ver este  perfil");
+        }
+
+        User user = this.userRepository.findById(userId).orElseThrow(()
+                -> new UserNotFoundException("Usuario no encontrados"));
+
+
+        return ProfileResponseDto.builder()
+                .username(user.getEmail())
+                .role(user.getRole().toString())
+                .age(user.getAge())
+                .DNI(user.getDNI())
+                .name(user.getName())
+                .country(user.getCountry())
+                .birthday(user.getDateBirthDay() != null ? user.getDateBirthDay().toString(): "Dato no proporcionado")
+                .build();
     }
 }

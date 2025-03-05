@@ -131,8 +131,8 @@ public class AccountBankServiceImpl implements IAccountBankService {
 
         int accountCount = this.accountBankRepository.countByUser(user);
 
-        if (accountCount >=2) {
-            throw new BadRequestExceptions("no puede crear mas de 2 cuentas Bancarias");
+        if (accountCount >=1) {
+            throw new BadRequestExceptions("por ahora solo se puede activar une cuenta");
         }
 
         return accountCount;
@@ -192,7 +192,7 @@ public class AccountBankServiceImpl implements IAccountBankService {
      * Si la cuenta es válida para desactivación, cambia su estado a INACTIVE,
      * registra la fecha guarda datos.
      *
-     * @param accountId
+
      * @return Un objeto DeactivateAccountResponseDto con los detalles de la cuenta desactivada.
      * @throws InvalidCredentialExceptions
      * @throws BadRequestExceptions
@@ -200,16 +200,15 @@ public class AccountBankServiceImpl implements IAccountBankService {
      */
     @Transactional
     @Override
-    public DeactivateAccountResponseDto deactivateAccount(Long accountId) {
+    public DeactivateAccountResponseDto deactivateAccount() {
 
-           String username = this.utilsService.getAuthenticatedUser();
-           if (username == null) {
-               throw new InvalidCredentialExceptions("Usuario no Autenticado");
-           }
-
-           AccountBank accountBank = this.accountBankRepository.findById(accountId).orElseThrow(()
+        Long userId = this.utilsService.getAuthenticatedUserId();
+        if (userId == null) {
+            throw new CustomAuthenticationException("usuario no autenticado");
+        }
+           AccountBank accountBank = this.accountBankRepository.findByUserId(userId).orElseThrow(()
                    -> new BadRequestExceptions(" Cuenta no encontrada"));
-           this.utilsService.validateOwnership(accountBank, username);
+           this.utilsService.validateUserAuthorization(accountBank, userId);
 
            this.utilsService.validateAccountStatus(accountBank);
            this.utilsService.validateBalanceAccount(accountBank);
@@ -262,7 +261,7 @@ public class AccountBankServiceImpl implements IAccountBankService {
      * Si la cuenta es válida para react9car, cambia su estado a ACTIVE,
      * registra la fecha guarda datos.
      *
-     * @param accountId
+     * @param
      * @return Un objeto DeactivateAccountResponseDto con los detalles de la cuenta desactivada.
      * @throws InvalidCredentialExceptions
      * @throws BadRequestExceptions
@@ -270,15 +269,18 @@ public class AccountBankServiceImpl implements IAccountBankService {
      */
     @Transactional
     @Override
-    public ReactivateAccountResponseDto reactiveAccount(Long accountId) {
+    public ReactivateAccountResponseDto reactiveAccount() {
 
-            String username = this.utilsService.getAuthenticatedUser();
-            if (username == null) {
-                throw new InvalidCredentialExceptions("Usuario no Autenticado");
-            }
-            AccountBank accountBank = this.accountBankRepository.findById(accountId).orElseThrow(()
+        Long userId = this.utilsService.getAuthenticatedUserId();
+        if (userId == null) {
+            throw new CustomAuthenticationException("usuario no autenticado");
+        }
+
+            AccountBank accountBank = this.accountBankRepository.findByUserId(userId).orElseThrow(()
                     -> new CustomAuthenticationException("Error: la cuenta no fue encontrada"));
-            this.utilsService.validateOwnership(accountBank, username);
+
+            this.utilsService.validateUserAuthorization(accountBank, userId);
+
             if (!accountBank.getAccountStatus().equals(AccountStatus.INACTIVE)) {
                 throw new BadRequestExceptions("Solo se puede activar cuentas inactivas");
             }
@@ -339,15 +341,15 @@ public class AccountBankServiceImpl implements IAccountBankService {
     //Muestra el saldo en la cuenta
     @Transactional(readOnly = true)
     @Override
-    public ActiveAccountResponseDto getBalance(Long accountId) {
+    public ActiveAccountResponseDto getBalance() {
         {
-            String username = this.utilsService.getAuthenticatedUser();
-            if (username == null) {
+
+            Long userId = this.utilsService.getAuthenticatedUserId();
+            if (userId == null) {
                 throw new CustomAuthenticationException("usuario no autenticado");
             }
 
-
-            AccountBank account = accountBankRepository.findById(accountId)
+            AccountBank account = accountBankRepository.findByUserIdAndAccountStatus(userId,AccountStatus.ACTIVE)
                     .orElseThrow(() -> new ModelNotFoundException("Cuenta no Encontrada"));
 
             if (account.getAccountStatus() != AccountStatus.ACTIVE) {

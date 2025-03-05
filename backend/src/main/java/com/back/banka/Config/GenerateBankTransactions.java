@@ -21,6 +21,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 @Slf4j
 @Component
@@ -150,19 +151,25 @@ public class GenerateBankTransactions implements CommandLineRunner {
         if (existingUsers < 3) {
             System.out.println("Generando usuarios de prueba...");
 
+
+
+
             users = new ArrayList<>();
             for (int i = 0; i < 3; i++) {
-                User user = User.builder()
-                        .name("Usuario" + (i + 1))
-                        .email("usuario" + (i + 1) + "@example.com")
-                        .DNI("1234567" + (i + 1))
-                        .age(19 + (i + 1))
-                        .role(Role.CLIENT)
-                        .status(true)
-                        .country("Colombia")
-                        .password(passwordEncoder.encode("Password1234@"))
-                        .build();
-                users.add(user);
+                String dni = UUID.randomUUID().toString().replace("-", "").substring(0, 8);                boolean userExists = userRepository.existsByDNI(dni);
+                if(!userExists) {
+                    User user = User.builder()
+                            .name("Usuario" + (i + 1))
+                            .email("usuario" + (i + 1) + "@example.com")
+                            .DNI(dni)
+                            .age(19 + (i + 1))
+                            .role(Role.CLIENT)
+                            .status(true)
+                            .country("Colombia")
+                            .password(passwordEncoder.encode("Password1234@"))
+                            .build();
+                    users.add(user);
+                }
             }
             users = userRepository.saveAll(users);
         } else {
@@ -173,20 +180,19 @@ public class GenerateBankTransactions implements CommandLineRunner {
         if (existingAccounts >= 3) {
             return;
         }
-        log.info("verificando cuentas bancarias");
+
+        log.info("Verificando cuentas bancarias...");
 
         Random random = new Random();
         List<AccountBank> newAccounts = new ArrayList<>();
 
         for (User user : users) {
-            long userAccountsCount = accountRepository.countByUser(user);
+            boolean userHasAccount = accountRepository.existsByUser(user);
 
-            while (userAccountsCount < 2) {
+            if (!userHasAccount) {
                 String accountNumber = generateAccountNumber(random);
 
-
-                log.info("Generando cuentas bancarias");
-
+                log.info("Generando cuenta bancaria para el usuario: {}", user.getName());
 
                 AccountBank account = AccountBank.builder()
                         .number(accountNumber)
@@ -198,12 +204,14 @@ public class GenerateBankTransactions implements CommandLineRunner {
                         .build();
 
                 newAccounts.add(account);
-                userAccountsCount++;
             }
-
-            accountRepository.saveAll(newAccounts);
-            log.info("se generaros {} cuentas bancariaas", newAccounts.size());
         }
 
+        if (!newAccounts.isEmpty()) {
+            accountRepository.saveAll(newAccounts);
+            log.info("Se generaron {} cuentas bancarias", newAccounts.size());
+        } else {
+            log.info("No se generaron nuevas cuentas bancarias, todos los usuarios ya tienen una cuenta.");
+        }
     }
 }

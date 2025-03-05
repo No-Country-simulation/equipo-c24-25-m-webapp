@@ -85,7 +85,9 @@ public class SecurityConfig {
                                 .requestMatchers(
                                         "/api/banca/cuenta-bancaria/**",
                                 "/api/banca/transacciones/**",
-                                        "/api/banca/users/editar/{id}"
+                                        "/api/banca/users/editar",
+                                        "/api/banca/users/perfil-usuario"
+
                                 ).hasRole("CLIENT")
                         .anyRequest().authenticated())
 

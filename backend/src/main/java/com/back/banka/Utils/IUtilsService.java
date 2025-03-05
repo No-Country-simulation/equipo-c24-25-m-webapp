@@ -8,6 +8,8 @@ public interface IUtilsService{
     void validateAccountStatus(AccountBank accountBank);
     void validateBalanceAccount(AccountBank accountBank);
     String getAuthenticatedUser();
+    Long getAuthenticatedUserId();
+    void validateUserAuthorization(AccountBank accountBank, Long authenticatedUserId);
     void sendAccountNotification(User user, String subject, String
             templateName, String message);
     void saveUserToken(User user, String token);
