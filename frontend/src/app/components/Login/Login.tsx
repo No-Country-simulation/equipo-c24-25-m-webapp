@@ -25,9 +25,11 @@ const Login: React.FC = () => {
     event.preventDefault()
     try {
       const response = await axios.post(
-        'https://equipo-c24-25-m-webapp.onrender.com/api/banca/auth/login',
+        'https://equipo-c24-25-m-webapp-1.onrender.com/api/banca/auth/login',
         dataForm
       )
+      const accessToken= response.data.access_token;
+      localStorage.setItem("access_token",accessToken)
       console.log('Inicio de sesión existoso', response.data)
 
       Swal.fire({

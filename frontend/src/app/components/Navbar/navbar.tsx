@@ -39,7 +39,7 @@ const Navbar: React.FC = () => {
         >
           <ul className="flex flex-col justify-center items-center space-y-2 w-[90%] ">
             <li>
-              {' '}
+              
               <Link href="/">
                 <Image
                   height={178}

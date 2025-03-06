@@ -18,6 +18,8 @@ public class TransactionResponseDto {
     private LocalDateTime date;
     private String numberAccountSender;
     private String numberAccountReceiving;
+    private String accountSenderStatus;
+    private String accountReceiverStatus;
     private StatusTransactions status;
     private TransactionType transactionType;
 

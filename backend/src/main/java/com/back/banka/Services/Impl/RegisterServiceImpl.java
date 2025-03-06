@@ -8,7 +8,11 @@ import com.back.banka.Exceptions.Custom.UserAlreadyExistsException;
 import com.back.banka.Model.User;
 import com.back.banka.Repository.UserRepository;
 import com.back.banka.Services.IServices.IRegisterService;
+import com.back.banka.Utils.IUtilsService;
+import com.back.banka.Utils.JwtUtil;
+import jakarta.mail.MessagingException;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 @AllArgsConstructor
 @Service
 public class RegisterServiceImpl implements IRegisterService {
@@ -23,6 +28,9 @@ public class RegisterServiceImpl implements IRegisterService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final EmailServiceImpl emailService;
+    private final JwtUtil jwtUtil;
+    private final IUtilsService utilsService;
+
 
     @Transactional
     @Override
@@ -48,6 +56,13 @@ public class RegisterServiceImpl implements IRegisterService {
 
         User savedUser = userRepository.save(user);
 
+        String token = this.jwtUtil.generateAccessToken(request.getEmail());
+        String refreshToken = this.jwtUtil.generateRefreshToken(request.getEmail());
+        this.jwtUtil.diagnosticCheck(token);
+        log.info("REfresh token generado");
+        this.utilsService.revokedUsersToken(user);
+        this.utilsService.saveUserToken(user, token);
+
         Map<String, Object> emailVariables = new HashMap<>();
         emailVariables.put("name", savedUser.getName());
         emailVariables.put("message", "Te has registrado con exito");
@@ -58,12 +73,15 @@ public class RegisterServiceImpl implements IRegisterService {
                     "¡Bienvenido a Luma!", "register-confirmation",
                     emailVariables);
         } catch (Exception e) {
-            System.out.println("Error al enviar el correo: " + e.getMessage());
+            log.error("Error al enviar el correo de confirmación: {}", e.getMessage());
+            throw new RuntimeException("Error al enviar el correo de confirmación", e);
         }
 
         return RegisterResponseDto.builder()
                 .message("¡Registro Exitoso!")
                 .userId(savedUser.getId())
+                .accesToken(token)
+                .refreshToken(refreshToken)
                 .build();
     }
 

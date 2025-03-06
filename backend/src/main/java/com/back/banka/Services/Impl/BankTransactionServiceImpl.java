@@ -20,7 +20,9 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
@@ -91,24 +93,29 @@ public class BankTransactionServiceImpl {
 
         transactionRepository.save(transaction);
 
+
         CompletableFuture.runAsync(() -> {
             try {
-                emailService.sendEmail(
-                        username,
-                        "Transferencia realizada con éxito",
-                        String.format("Tu transferencia de $%s a la cuenta %s ha sido procesada con éxito. Tu nuevo saldo es $%s.",
-                                requestDto.getAmount(),
-                                receiverAccount.getNumber(),
-                                senderAccount.getBalance())
+
+                Map<String, Object> variables = new HashMap<>();
+                variables.put("amount", requestDto.getAmount());
+                variables.put("senderAccountNumber", senderAccount.getNumber());
+                variables.put("senderName", senderAccount.getUser().getName());
+                variables.put("receiverAccountNumber", receiverAccount.getNumber());
+                variables.put("receiverName", receiverAccount.getUser().getName());
+
+
+                this.utilsService.sendAccountNotificationVariables(
+                        receiverAccount.getUser(),
+                        "Confirmación de Transferencia",
+                        "transfer-confirmation",
+                        variables
                 );
 
-                emailService.sendEmail(
-                        receiverAccount.getUser().getEmail(),
-                        "Has recibido una transferencia",
-                        String.format("Has recibido una transferencia de $%s desde la cuenta %s. Tu nuevo saldo es $%s.",
-                                requestDto.getAmount(),
-                                senderAccount.getNumber(),
-                                receiverAccount.getBalance())
+                this.utilsService.sendAccountNotificationVariables(
+                        senderAccount.getUser(),
+                        "Confirmación de Transferencia",
+                        "sender-transfer-confirmation",variables
                 );
             } catch (Exception e) {
                 log.error("Error al enviar emails de notificación: {}", e.getMessage(), e);
@@ -123,6 +130,8 @@ public class BankTransactionServiceImpl {
                 transaction.getDate(),
                 transaction.getAccountSend().getNumber(),
                 transaction.getAccountReceiving().getNumber(),
+                transaction.getAccountSend().getAccountStatus().toString(),
+                transaction.getAccountReceiving().getAccountStatus().toString(),
                 transaction.getStatus(),
                 transaction.getTransactionType()
         );
@@ -160,6 +169,8 @@ public class BankTransactionServiceImpl {
                                 transaction.getDate(),
                                 transaction.getAccountSend().getNumber(),
                                 transaction.getAccountReceiving().getNumber(),
+                                transaction.getAccountSend().getAccountStatus().toString(),
+                                transaction.getAccountReceiving().getAccountStatus().toString(),
                                 transaction.getStatus(),
                                 isIncoming ? TransactionType.RECEIVING_TRANSACTION : TransactionType.SENDING_TRANSACTION
 

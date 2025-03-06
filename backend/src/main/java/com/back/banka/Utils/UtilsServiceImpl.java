@@ -19,6 +19,7 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Component
@@ -87,10 +88,9 @@ public class UtilsServiceImpl implements IUtilsService {
 
         Object principal = authentication.getPrincipal();
         if (principal instanceof SecurityUser) {
-            // Acceder al User dentro de SecurityUser y obtener el ID
-            User user = ((SecurityUser) principal).getUser(); // Necesitarás añadir este método getter
+            User user = ((SecurityUser) principal).getUser();
             if (user != null) {
-                Long userId = user.getId(); // O el método apropiado según tu entidad User
+                Long userId = user.getId();
                 logger.info("Usuario autenticado ID: " + userId);
                 return userId;
             }
@@ -134,5 +134,31 @@ public class UtilsServiceImpl implements IUtilsService {
         if (!accountBank.getUser().getId().equals(authenticatedUserId)) {
             throw new CustomAuthenticationException("No autorizado para reactivar esta cuenta");
         }
+    }
+
+    public void revokedUsersToken(User user) {
+        List<Tokens> validations =
+                this.tokenRepository.findAllIExpiredIsFalseOrRevokedIsFalseByUserId(user.getId());
+        if (!validations.isEmpty()) {
+            validations.forEach(token -> {
+                token.setRevoked(true);
+                token.setExpired(true);
+            });
+            tokenRepository.saveAll(validations);
+        }
+    }
+
+    @Override
+    public void sendAccountNotificationVariables(User user,
+                                        String subject,
+                                        String templateName,
+                                        Map<String, Object> emailVariables) {
+        emailVariables.put("name", user.getName()); // Agregar el nombre del usuario
+        emailService.sendEmailTemplate(
+                user.getEmail(),
+                subject,
+                templateName,
+                emailVariables
+        );
     }
 }

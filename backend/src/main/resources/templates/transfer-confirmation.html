@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmación de Transferencia</title>
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            background-color: #366325;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .content {
+            padding: 20px 30px;
+        }
+
+        .greeting {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .highlight {
+            color: #366325;
+            font-weight: bold;
+        }
+
+        .sender-info {
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .detail-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid #366325;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        .detail-item {
+            padding: 8px 0;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .detail-item i {
+            color: #28a745;
+            margin-right: 10px;
+            font-size: 18px;
+            min-width: 20px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 15px;
+            background-color: #f8f9fa;
+            font-size: 12px;
+            color: #666;
+        }
+
+        /* Estilos responsivos */
+        @media screen and (max-width: 480px) {
+            .container {
+                border-radius: 0;
+            }
+
+            .content {
+                padding: 15px;
+            }
+
+            .header h1 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>¡Transferencia Confirmada!</h1>
+    </div>
+
+    <div class="content">
+        <div class="greeting">
+            Hola, <span class="highlight" th:text="${name}"></span>
+        </div>
+
+        <div class="sender-info">
+            <h2>Recibiste una transferencia de:</h2>
+            <span class="highlight" th:text="${senderName}"></span>
+        </div>
+
+        <p><strong>Te mostramos los detalles de la transferencia:</strong></p>
+
+        <div class="detail-box">
+            <div class="detail-item">
+                <i>✅</i> <span>Monto Recibido: <span class="highlight" th:text="${amount}"></span></span>
+            </div>
+            <div class="detail-item">
+                <i>✅</i> <span>Cuenta de origen: <span class="highlight" th:text="${senderAccountNumber}"></span></span>
+            </div>
+            <div class="detail-item">
+                <i>✅</i> <span>Cuenta de destino: <span class="highlight" th:text="${receiverAccountNumber}"></span></span>
+            </div>
+            <div class="detail-item">
+                <i>✅</i> <span>Fecha y hora: <span class="highlight" th:text="${#dates.format(#dates.createNow(), 'dd/MM/yyyy HH:mm')}"></span></span>
+            </div>
+        </div>
+
+        <p>Gracias por utilizar nuestros servicios bancarios.</p>
+    </div>
+
+    <div class="footer">
+        <p>Este es un mensaje automático, por favor no responda a este correo.</p>
+        <p>&copy; 2025 Banco LUMA. Todos los derechos reservados.</p>
+        <p>Si tienes alguna pregunta, contáctanos en <a href="mailto:soporte@bancoluma.com">soporte@bancoluma.com</a></p>
+    </div>
+</div>
+</body>
+</html>

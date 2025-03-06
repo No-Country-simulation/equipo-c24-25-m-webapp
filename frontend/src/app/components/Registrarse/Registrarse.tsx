@@ -30,7 +30,8 @@ const Registrarse: React.FC = () => {
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         try {
-            const response = await axios.post("https://equipo-c24-25-m-webapp.onrender.com/api/banca/auth/registrarse", dataForm)
+            console.log(dataForm)
+            const response = await axios.post("https://equipo-c24-25-m-webapp-1.onrender.com/api/banca/auth/registrarse", dataForm)
          console.log("registro existoso",response.data)
 
           

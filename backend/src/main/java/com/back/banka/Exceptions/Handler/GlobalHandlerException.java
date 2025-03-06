@@ -127,7 +127,48 @@ public class GlobalHandlerException {
         return new ResponseEntity<>(errorResponse, ex.getStatusCode());
     }
 
+    @ExceptionHandler(InsufficientFundsException.class)
+    public ResponseEntity<ErrorResponseDto> handleUserAlreadyExistsException(InsufficientFundsException ex) {
+        ErrorResponseDto errorResponse = ErrorResponseDto.builder()
+                .code(HttpStatus.BAD_REQUEST.value())
+                .message(ex.getMessage())
+                .dateCreation(LocalDate.now())
+                .build();
 
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(AccountStatusException.class)
+    public ResponseEntity<ErrorResponseDto> handleUserAlreadyExistsException(AccountStatusException ex) {
+        ErrorResponseDto errorResponse = ErrorResponseDto.builder()
+                .code(HttpStatus.CONFLICT.value())
+                .message(ex.getMessage())
+                .dateCreation(LocalDate.now())
+                .build();
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
+    }
+    @ExceptionHandler(InvalidAmountException.class)
+    public ResponseEntity<ErrorResponseDto> handleInvalidAmountExceptionException(InvalidAmountException ex) {
+        ErrorResponseDto errorResponse = ErrorResponseDto.builder()
+                .code(HttpStatus.CONFLICT.value())
+                .message(ex.getMessage())
+                .dateCreation(LocalDate.now())
+                .build();
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(InvalidTransactionsException.class)
+    public ResponseEntity<ErrorResponseDto> handleInvalidTransactionException(InvalidTransactionsException ex) {
+        ErrorResponseDto errorResponse = ErrorResponseDto.builder()
+                .code(HttpStatus.CONFLICT.value())
+                .message(ex.getMessage())
+                .dateCreation(LocalDate.now())
+                .build();
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
+    }
 
     @ExceptionHandler(UserAlreadyExistsException.class)
     public ResponseEntity<ErrorResponseDto> handleUserAlreadyExistsException(UserAlreadyExistsException ex) {
@@ -141,7 +182,7 @@ public class GlobalHandlerException {
     }
 
     @ExceptionHandler(DniAlreadyExistsException.class)
-    public ResponseEntity<ErrorResponseDto> handleUserAlreadyExistsException(DniAlreadyExistsException ex) {
+    public ResponseEntity<ErrorResponseDto> handleDNIAlreadyExistsException(DniAlreadyExistsException ex) {
         ErrorResponseDto errorResponse = ErrorResponseDto.builder()
                 .code(HttpStatus.CONFLICT.value())
                 .message(ex.getMessage())
