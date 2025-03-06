@@ -19,7 +19,12 @@ public interface BankTransactionRepository extends JpaRepository<BankTransaction
 
     @Query("SELECT bt FROM BankTransaction bt WHERE bt.accountSend.id = :accountId OR bt.accountReceiving.id = :accountId ORDER BY EXTRACT(YEAR FROM bt.date) DESC, EXTRACT(MONTH FROM bt.date) DESC, bt.date DESC")
     List<BankTransaction> findAllTransactionsOrderedByMonth(@Param("accountId") Long accountId);
-
+    @Query("SELECT COALESCE(SUM(t.amount), 0) FROM BankTransaction t " +
+            "WHERE t.accountSend.id = :accountId " +
+            "AND t.transactionType = 'SENDING_TRANSACTION' " +
+            "AND t.status = 'COMPLETED' " +
+            "AND CAST(t.date AS LocalDate) = :date")
+    BigDecimal getTotalAmountTransferredToday(@Param("accountId") Long accountId, @Param("date") LocalDate date);
 
 
 }

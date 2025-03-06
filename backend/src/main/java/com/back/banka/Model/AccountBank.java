@@ -31,6 +31,8 @@ public class AccountBank {
 
         @Column(precision = 15, scale = 2,nullable = false)
         private BigDecimal balance;
+        @Column(name = "daily_transfer_limit",nullable = false, precision = 15, scale = 2)
+        private BigDecimal dailyTransferLimit = new BigDecimal("50000000.00");
 
         @ManyToOne(fetch = FetchType.LAZY)
         @JoinColumn(name = "user_id")
@@ -48,5 +50,6 @@ public class AccountBank {
         private LocalDate dateOfActivation;
         private LocalDate dateOfDeactivation;
         private LocalDate dateOfReactivation;
+        private LocalDate dateOfBlocked;
 
 }

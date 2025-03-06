@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -76,6 +77,12 @@ public class BankTransactionServiceImpl {
             throw new AccountStatusException("Ambas cuentas deben estar activas");
         }
 
+        BigDecimal dailyLimit = senderAccount.getDailyTransferLimit();
+        BigDecimal todayTransferred = transactionRepository.getTotalAmountTransferredToday(senderAccount.getId(), LocalDate.now());
+
+        if (todayTransferred.add(requestDto.getAmount()).compareTo(dailyLimit) > 0) {
+            throw new TransferLimitExceededException("La transferencia excede el límite diario permitido");
+        }
         senderAccount.setBalance(senderAccount.getBalance().subtract(requestDto.getAmount()));
         receiverAccount.setBalance(receiverAccount.getBalance().add(requestDto.getAmount()));
 

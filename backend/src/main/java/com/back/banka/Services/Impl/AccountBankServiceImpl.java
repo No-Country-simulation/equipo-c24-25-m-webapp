@@ -113,7 +113,6 @@ public class AccountBankServiceImpl implements IAccountBankService {
 
 
         int age = Period.between(requestDto.getBirthDate(), LocalDate.now()).getYears();
-
         if (age < 18 || age > 120) {
             throw new BadRequestExceptions("Edad inválida. Debe ser mayor de edad.");
         }
@@ -305,6 +304,7 @@ public class AccountBankServiceImpl implements IAccountBankService {
                     "Tu cuenta bancaria ha sido reactivada con éxito.");
             this.accountBankRepository.save(accountBank);
         } catch (InvalidCredentialExceptions | CustomAuthenticationException | BadRequestExceptions e) {
+
             throw e;
 
         } catch (Exception e){
