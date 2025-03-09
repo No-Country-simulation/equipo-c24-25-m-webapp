@@ -21,6 +21,7 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 @Component
 @RequiredArgsConstructor
@@ -153,7 +154,7 @@ public class UtilsServiceImpl implements IUtilsService {
                                         String subject,
                                         String templateName,
                                         Map<String, Object> emailVariables) {
-        emailVariables.put("name", user.getName()); // Agregar el nombre del usuario
+        emailVariables.put("name", user.getName());
         emailService.sendEmailTemplate(
                 user.getEmail(),
                 subject,
@@ -161,4 +162,5 @@ public class UtilsServiceImpl implements IUtilsService {
                 emailVariables
         );
     }
+
 }

@@ -29,7 +29,7 @@ public class UserController {
 
      @Autowired
     public UserController(
-            IUserService userService, UserServiceImpl userServiceImpl) {
+            IUserService userService) {
         this.userService = userService;
     }
 

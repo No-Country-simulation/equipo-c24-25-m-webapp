@@ -170,6 +170,27 @@ public class GlobalHandlerException {
         return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
     }
 
+    @ExceptionHandler(InvalidVerificationCodeException.class)
+    public ResponseEntity<ErrorResponseDto> handleUserAlreadyExistsException(InvalidVerificationCodeException ex) {
+        ErrorResponseDto errorResponse = ErrorResponseDto.builder()
+                .code(HttpStatus.NOT_FOUND.value())
+                .message(ex.getMessage())
+                .dateCreation(LocalDate.now())
+                .build();
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(VerificationCodeExpiredException.class)
+    public ResponseEntity<ErrorResponseDto> handleUserAlreadyExistsException(VerificationCodeExpiredException ex) {
+        ErrorResponseDto errorResponse = ErrorResponseDto.builder()
+                .code(HttpStatus.CONFLICT.value())
+                .message(ex.getMessage())
+                .dateCreation(LocalDate.now())
+                .build();
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
+    }
     @ExceptionHandler(UserAlreadyExistsException.class)
     public ResponseEntity<ErrorResponseDto> handleUserAlreadyExistsException(UserAlreadyExistsException ex) {
         ErrorResponseDto errorResponse = ErrorResponseDto.builder()

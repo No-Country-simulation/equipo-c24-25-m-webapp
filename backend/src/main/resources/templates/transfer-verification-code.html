@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Código de Verificación de Transferencia</title>
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            background-color: #366325;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .content {
+            padding: 20px 30px;
+        }
+
+        .greeting {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .highlight {
+            color: #366325;
+            font-weight: bold;
+        }
+
+        .code-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid #366325;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .verification-code {
+            font-size: 32px;
+            letter-spacing: 5px;
+            color: #366325;
+            font-weight: bold;
+            padding: 15px 0;
+        }
+
+        .expiration {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #dc3545;
+        }
+
+        .detail-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid #366325;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        .detail-item {
+            padding: 8px 0;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .detail-item i {
+            color: #28a745;
+            margin-right: 10px;
+            font-size: 18px;
+            min-width: 20px;
+        }
+
+        .warning {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 15px;
+            background-color: #f8f9fa;
+            font-size: 12px;
+            color: #666;
+        }
+
+        /* Estilos responsivos */
+        @media screen and (max-width: 480px) {
+            .container {
+                border-radius: 0;
+            }
+
+            .content {
+                padding: 15px;
+            }
+
+            .header h1 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>Código de Verificación para Transferencia</h1>
+    </div>
+
+    <div class="content">
+        <div class="greeting">
+            Hola, <span class="highlight" th:text="${userName}"></span>
+        </div>
+
+        <p>Has solicitado realizar una transferencia. Para autorizar esta operación, utiliza el siguiente código de verificación:</p>
+
+        <div class="code-box">
+            <div class="verification-code" th:text="${verificationCode}"></div>
+            <div class="expiration">Este código expirará en <span th:text="${expirationMinutes}"></span> minutos</div>
+        </div>
+
+        <div class="detail-box" th:if="${amount != null and receiverName != null}">
+            <p><strong>Detalles de la transferencia:</strong></p>
+            <div class="detail-item">
+                <i>✅</i> <span>Monto a transferir: <span class="highlight" th:text="${amount}"></span></span>
+            </div>
+            <div class="detail-item">
+                <i>✅</i> <span>Destinatario: <span class="highlight" th:text="${receiverName}"></span></span>
+            </div>
+            <div class="detail-item" th:if="${receiverAccountNumber != null}">
+                <i>✅</i> <span>Cuenta de destino: <span class="highlight" th:text="${receiverAccountNumber}"></span></span>
+            </div>
+            <div class="detail-item" th:if="${bankName != null}">
+                <i>✅</i> <span>Banco: <span class="highlight" th:text="${bankName}"></span></span>
+            </div>
+            <div class="detail-item">
+                <i>✅</i> <span>Fecha y hora: <span class="highlight" th:text="${#dates.format(#dates.createNow(), 'dd/MM/yyyy HH:mm')}"></span></span>
+            </div>
+        </div>
+
+        <div class="warning">
+            <p><strong>Importante:</strong> Nunca compartas este código con nadie. Nuestros representantes nunca te pedirán este código por teléfono o mensajes.</p>
+        </div>
+
+        <p>Si no has solicitado este código o tienes alguna duda, por favor contacta inmediatamente con nuestro servicio de atención al cliente.</p>
+
+        <p>Gracias por utilizar nuestros servicios bancarios.</p>
+    </div>
+
+    <div class="footer">
+        <p>Este es un mensaje automático, por favor no responda a este correo.</p>
+        <p>&copy; 2025 Banco LUMA. Todos los derechos reservados.</p>
+        <p>Si tienes alguna pregunta, contáctanos en <a href="mailto:soporte@bancoluma.com">soporte@bancoluma.com</a></p>
+    </div>
+</div>
+</body>
+</html>

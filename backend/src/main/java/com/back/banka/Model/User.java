@@ -55,6 +55,9 @@ import java.util.List;
          @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,orphanRemoval = true)
          private List<Notifications> notifications;
 
+         @OneToMany(mappedBy = "user",cascade = CascadeType.ALL, orphanRemoval = true)
+         private List<VerificationCode> verificationCodes;
+
          private LocalDate dateBirthDay;
 
 
