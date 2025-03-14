@@ -1,12 +1,16 @@
-🏢 Sistema de Banco Online ⏳📌
+*SISTEMA DE BANCO ONLINE Y DIGITAL*
+
 🚀 PROYECTO : LUMA BANCA ONLINE
 
+
 🌐 https://equipo-c24-25-m-webapp-forking.vercel.app/)
+
 Equipo: C24 - 25 - Mañana - WebApp
 COHORTE
 Team Leader: Pablo Velasco
 
 COLABORADORES
+
 ✔️Andres Rodriguez - Front End
 
 ✔️Betina Estanga - UX/UI
@@ -23,14 +27,19 @@ COLABORADORES
 
 ✔️Sol Razuri - Front End
 
-📌 Resumen del Proyecto
-El equipo está llevo a cabo una WEBAPP de un banco digital al alcance de todo publico para mayor facilidad de acceso a las transacciones bancarias  
+
+📌PROYECTO:
+
+El equipo llevo a cabo una *WEBAPP* de un banco digital al alcance de todo publico (tanto para jóvenes de 18 años como para adultos mayores con poco manejo de tecnología) para mayor facilidad de acceso a las transacciones bancarias, brindando una interfaz, limpia , clara e intuitiva.
 
 MVP 
 El MVP se enfocará en desarrollar las siguientes caracteristicas:
 
-✅ Registro de Nuevos Usuarios y su validación. 
-✅ Ingreso a la interfaz
-✅ Realizar Transferencias 
+✅ Registro de Nuevos Usuarios
+✅ Login  y  Transacciones
 ✅ Visualizar su saldo y transacciones
 ✅ Modificar sus datos de usuario 
+
+DISEÑO UX/ UI realizado en FIGMA:
+
+http://figma.com/design/vyFmhFeqbnsDLvTQlYMH9V/EQUIPO-C24-25?node-id=137-2&p=f&t=xlgCy9adUaNHbuh4-0
